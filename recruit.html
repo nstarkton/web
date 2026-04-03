@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>採用情報 | こむかい農園 - AIUEO FARM -</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600&family=Shippori+Mincho:wght@400;700&family=Noto+Sans+JP:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root { 
+            --text: #2A2E2A; 
+            --accent: #D66A4E;
+            --bg-base: #F9F7F2;      
+            --white: #FFFFFF; 
+            --header-h: 80px;
+            --spring: #98B66E; 
+            --summer: #E9B84C; 
+            --autumn: #BD6B42; 
+            --winter: #708A91; 
+            --intern-bg: #E3E9E0; 
+            --primary: #4A5D45; 
+            --primary-dark: #3A4A35;
+        }
+
+        /* --- Global Reset & Base --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        
+        body { 
+            color: var(--text); 
+            font-family: 'Noto Sans JP', sans-serif; 
+            background-color: var(--bg-base); 
+            transition: background-color 1.5s cubic-bezier(0.22, 1, 0.36, 1); 
+            overflow-x: hidden; 
+            line-height: 1.8; 
+            font-size: 15px;
+            position: relative;
+        }
+
+        /* Rich Effect: Noise Texture Overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48ZmlsdGVyIGlkPSJnoiPjxmZVR1cmJ1bGVuY2UgdHlwZT0iZnJhY3RhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIwLjY1IiBudW1PY3RhdmVzPSIzIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI2cpIiBvcGFjaXR5PSIwLjAzIi8+PC9zdmc+');
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.6;
+        }
+
+        /* --- Navigation --- */
+        header { 
+            position: fixed; top: 0; width: 100%; height: var(--header-h); 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 0 4%; z-index: 1000; background: rgba(249, 247, 242, 0.85); 
+            backdrop-filter: blur(20px); border-bottom: 1px solid rgba(74, 93, 69, 0.08);
+            transition: 0.5s;
+        }
+        .logo { 
+            font-family: 'Shippori Mincho'; font-size: 1.1rem; font-weight: 700; 
+            text-decoration: none; color: var(--primary); letter-spacing: 0.05em; 
+        }
+        .logo span { font-size: 0.7rem; opacity: 0.7; margin-left: 5px; }
+        
+        .header-right { display: flex; align-items: center; }
+        .pc-nav { display: none; list-style: none; gap: 20px; }
+        .pc-nav a { 
+            text-decoration: none; color: var(--primary); font-size: 0.75rem; 
+            font-weight: 700; opacity: 0.6; transition: 0.4s; 
+            position: relative; padding: 5px 0; letter-spacing: 0.05em;
+        }
+        .pc-nav a:hover, .pc-nav a.active { opacity: 1; color: var(--accent); }
+        .pc-nav a::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 0; 
+            height: 1px; background: var(--accent); transition: 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .pc-nav a.active::after { width: 100%; }
+
+        /* Mobile Menu */
+        .hamburger { 
+            position: fixed; top: 15px; right: 4%; width: 50px; height: 50px; 
+            cursor: pointer; display: flex; flex-direction: column; justify-content: center; 
+            align-items: center; gap: 6px; z-index: 100000; border: none; 
+            background: var(--primary); border-radius: 50%; box-shadow: 0 8px 20px rgba(74, 93, 69, 0.3); 
+            transition: 0.3s;
+        }
+        .hamburger:hover { transform: scale(1.05); background: var(--primary-dark); }
+        .hamburger span { display: block; width: 20px; height: 2px; background: #fff; transition: 0.4s; }
+        .hamburger.active span:nth-child(1) { transform: translateY(4px) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { transform: translateY(-4px) rotate(-45deg); }
+
+        .mobile-menu { 
+            position: fixed; top: 0; right: 0; width: 100%; height: 100%; 
+            background: var(--primary); z-index: 99999; padding: 100px 8%; 
+            transform: translateX(100%); transition: 0.6s cubic-bezier(0.7, 0, 0.2, 1);
+            display: flex; flex-direction: column; justify-content: center;
+        }
+        .mobile-menu.active { transform: translateX(0); }
+        .mobile-menu a { 
+            font-size: 1.5rem; margin: 15px 0; text-decoration: none; 
+            color: #fff; font-family: 'Shippori Mincho'; font-weight: 700; opacity: 0;
+            transform: translateY(20px); transition: 0.5s;
+        }
+        .mobile-menu.active a { opacity: 1; transform: translateY(0); }
+        /* Stagger animation for links */
+        .mobile-menu.active a:nth-child(1) { transition-delay: 0.1s; }
+        .mobile-menu.active a:nth-child(2) { transition-delay: 0.2s; }
+        .mobile-menu.active a:nth-child(3) { transition-delay: 0.3s; }
+        .mobile-menu.active a:nth-child(4) { transition-delay: 0.4s; }
+        .mobile-menu.active a:nth-child(5) { transition-delay: 0.5s; }
+        .mobile-menu.active a:nth-child(6) { transition-delay: 0.6s; }
+        .mobile-menu.active a:nth-child(7) { transition-delay: 0.7s; }
+
+        .menu-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 99998;
+            opacity: 0; visibility: hidden; transition: 0.6s; backdrop-filter: blur(5px);
+        }
+        .menu-overlay.active { opacity: 1; visibility: visible; }
+
+        @media (min-width: 1024px) { 
+            .pc-nav { display: flex; } 
+            .hamburger { display: none; } 
+            header { height: 100px; padding: 0 6%; }
+            .logo { font-size: 1.4rem; }
+            body { font-size: 16px; }
+        }
+
+        /* --- Hero --- */
+        .hero { height: 100vh; position: relative; overflow: hidden; }
+        .hero-slide { 
+            position: absolute; inset: 0; opacity: 0; transition: opacity 2s ease, transform 8s ease; 
+            background-size: cover; background-position: center; filter: saturate(1.1) brightness(0.9);
+            transform: scale(1);
+        }
+        .hero-slide.active { opacity: 1; transform: scale(1.1); }
+        .hero-overlay { position: absolute; inset: 0; background: radial-gradient(circle, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.5) 100%); }
+        .hero-content { 
+            position: absolute; bottom: 15%; left: 6%; z-index: 10; 
+            color: #fff; text-align: left; max-width: 90%;
+        }
+        .hero-content h1 { 
+            font-family: 'Shippori Mincho'; font-size: clamp(2.5rem, 10vw, 5rem); 
+            line-height: 1.1; text-shadow: 0 10px 30px rgba(0,0,0,0.3); letter-spacing: 0.02em;
+            margin-bottom: 20px;
+        }
+        
+        /* --- Section Common --- */
+        section { padding: 80px 0; position: relative; z-index: 1; }
+        .container { width: 100%; margin: 0 auto; max-width: 1280px; }
+        
+        .tag { 
+            font-family: 'Outfit'; color: var(--accent); font-size: 0.85rem; 
+            letter-spacing: 0.25em; margin-bottom: 15px; display: block; 
+            font-weight: 600; text-transform: uppercase;
+        }
+        h2 { 
+            font-family: 'Shippori Mincho'; font-size: clamp(2rem, 6vw, 3.2rem); 
+            margin-bottom: 60px; line-height: 1.3; font-weight: 800; color: var(--primary);
+        }
+
+        /* --- Split Section (Message & Interview) --- */
+        .split { 
+            display: flex; flex-direction: column; background: var(--white); 
+            overflow: hidden; border-radius: 0; box-shadow: none; 
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .split-img { width: 100%; height: 400px; object-fit: cover; }
+        .split-txt { padding: 60px 5%; position: relative; }
+        
+        @media (min-width: 900px) { 
+            section { padding: 140px 0; }
+            .split { 
+                flex-direction: row; border-radius: 40px; 
+                box-shadow: 0 30px 60px rgba(74, 93, 69, 0.05); 
+                border: 1px solid rgba(255,255,255,0.5);
+            } 
+            .split.rev { flex-direction: row-reverse; } 
+            .split-img { width: 55%; height: auto; min-height: 650px; } 
+            .split-txt { width: 45%; padding: 100px 6%; display: flex; flex-direction: column; justify-content: center; } 
+            .split-txt h3 { font-size: 2.2rem; }
+        }
+
+        .split-txt h3 { 
+            font-family: 'Shippori Mincho'; font-size: 1.8rem; margin-bottom: 30px; 
+            line-height: 1.5; color: var(--primary); 
+        }
+        .split-txt p { margin-bottom: 25px; font-size: 1rem; color: #555; leading-trim: both; }
+
+        /* --- NEW SECTION: Job Description (Works) --- */
+        /* Rich Background with Parallax */
+        #works {
+            background-image: url('https://images.unsplash.com/photo-1625246333195-78d9c38ad449?q=80&w=2000&auto=format&fit=crop');
+            background-attachment: fixed; /* Parallax Effect */
+            background-size: cover;
+            background-position: center;
+            padding: 120px 0;
+            position: relative;
+        }
+        #works::after {
+            content: ''; position: absolute; inset: 0;
+            background: rgba(74, 93, 69, 0.85); /* Dark overlay */
+            backdrop-filter: blur(3px);
+            z-index: 1;
+        }
+        #works .container { position: relative; z-index: 2; }
+        #works h2, #works .tag { color: #fff; text-align: center; }
+        #works .tag { opacity: 0.8; }
+
+        .works-grid {
+            display: grid; grid-template-columns: 1fr; gap: 30px; margin-top: 60px;
+        }
+        .work-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 40px;
+            border-radius: 20px;
+            color: #fff;
+            transition: transform 0.4s, background 0.4s;
+        }
+        .work-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        .work-icon {
+            font-size: 2.5rem; margin-bottom: 20px; display: block; color: var(--summer);
+        }
+        .work-card h3 {
+            font-family: 'Shippori Mincho'; font-size: 1.4rem; margin-bottom: 15px;
+        }
+        .work-card p {
+            font-size: 0.95rem; opacity: 0.9; line-height: 1.7;
+        }
+
+        @media (min-width: 900px) {
+            .works-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        /* --- Schedule (Seasons) --- */
+        .schedule-grid { display: grid; grid-template-columns: 1fr; gap: 0; }
+        
+        .season-card { 
+            background: #fff; overflow: hidden; 
+            transition: 0.4s; border-bottom: 1px solid #eee;
+            display: none; animation: fadeIn 0.6s ease;}
+        
+        @media (min-width: 768px) {
+            .schedule-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; }
+            .season-card { 
+                display: block !important; 
+                border-radius: 25px; 
+                border: 1px solid rgba(0,0,0,0.03);
+                box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            }
+        }
+        .season-card.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .season-img { width: 100%; height: 220px; object-fit: cover; }
+        .season-header { 
+            padding: 20px; color: #fff; font-family: 'Shippori Mincho'; 
+            font-weight: 700; text-align: center; font-size: 1.2rem; letter-spacing: 0.1em;
+        }
+        .season-header.spring { background: var(--spring); }
+        .season-header.summer { background: var(--summer); }
+        .season-header.autumn { background: var(--autumn); }
+        .season-header.winter { background: var(--winter); }
+        
+        .time-list { list-style: none; padding: 30px; }
+        .time-list li { 
+            margin-bottom: 15px; display: flex; align-items: baseline; 
+            border-bottom: 1px solid #f5f5f5; padding-bottom: 10px; font-size: 0.95rem; 
+        }
+        .time-list .time { 
+            font-family: 'Outfit'; font-weight: 600; min-width: 70px; 
+            color: var(--accent); font-size: 1rem; 
+        }
+
+        /* Mobile Tabs Styles */
+        .mobile-tabs {
+            display: flex; justify-content: center; gap: 10px; margin-bottom: 40px;
+        }
+        .tab-btn {
+            border: 1px solid var(--primary); background: transparent; color: var(--primary);
+            padding: 10px 20px; border-radius: 50px; font-family: 'Shippori Mincho';
+            font-weight: 700; cursor: pointer; transition: 0.3s; font-size: 0.9rem;
+        }
+        .tab-btn.active { background: var(--primary); color: #fff; }
+
+        @media (min-width: 768px) { .mobile-tabs { display: none; } }
+        @media (min-width: 1024px) { 
+            .schedule-grid { grid-template-columns: repeat(4, 1fr); }
+            .season-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+        }
+
+        /* --- Intern --- */
+        .intern-box { 
+            background: var(--primary); color: #fff; padding: 60px 5%; 
+            border-radius: 0; text-align: center;
+        }
+        .intern-grid { display: grid; grid-template-columns: 1fr; gap: 30px; margin-top: 50px; }
+        .intern-item { 
+            background: #fff; color: var(--text); border-radius: 20px; 
+            text-align: left; overflow: hidden; transition: 0.3s;
+            display: flex; flex-direction: column;
+        }
+        .intern-item-img { width: 100%; height: 200px; object-fit: cover; }
+        .intern-item-content { padding: 30px; flex-grow: 1; }
+        .intern-item h4 { color: var(--primary); margin-bottom: 15px; font-size: 1.3rem; font-family: 'Shippori Mincho'; }
+        .intern-item p { font-size: 0.95rem; color: #666; line-height: 1.7; }
+
+        @media (min-width: 768px) {
+            .intern-grid { grid-template-columns: repeat(3, 1fr); }
+            .intern-box { 
+                padding: 100px 5%; border-radius: 80px 80px 5px 80px; 
+                background: linear-gradient(135deg, var(--primary), #2c3e29);
+            }
+        }
+
+        /* --- Requirements --- */
+        .req-card { 
+            background: #fff; padding: 40px 5%; border-radius: 0; 
+            border-bottom: 1px solid #eee; border-top: 1px solid #eee;
+        }
+        .job-label { 
+            display: inline-block; padding: 8px 25px; background: var(--accent); color: #fff; 
+            border-radius: 50px; font-size: 0.8rem; font-weight: 700; margin-bottom: 25px;
+            box-shadow: 0 4px 10px rgba(214, 106, 78, 0.3);
+        }
+        .req-table { width: 100%; border-collapse: collapse; }
+        .req-table tr { display: flex; flex-direction: column; border-bottom: 1px solid #eee; padding: 25px 0; }
+        .req-table th { 
+            text-align: left; width: 100%; font-weight: 700; 
+            color: var(--primary); margin-bottom: 10px; font-family: 'Shippori Mincho'; 
+            font-size: 1.1rem;
+        }
+        .req-table td { width: 100%; font-size: 1rem; color: #444; }
+
+        @media (min-width: 768px) {
+            .req-card { 
+                padding: 80px 8%; border-radius: 5px 80px 5px 80px; 
+                box-shadow: 0 20px 60px rgba(0,0,0,0.05); border: none; 
+            }
+            .req-table tr { flex-direction: row; align-items: flex-start; }
+            .req-table th { width: 220px; margin-bottom: 0; }
+            .req-table td { width: calc(100% - 220px); }
+        }
+
+        /* --- Form --- */
+        .entry-form { 
+            background: #fff; padding: 50px 5%; border-radius: 0; 
+            max-width: 1000px; margin: 0 auto;
+        }
+        .form-group { margin-bottom: 35px; }
+        .form-group label { 
+            display: block; font-size: 0.85rem; color: var(--primary); 
+            margin-bottom: 12px; font-weight: 700; letter-spacing: 0.05em;
+        }
+        .form-group input, .form-group select, .form-group textarea { 
+            width: 100%; padding: 15px 10px; border: none; border-bottom: 2px solid #e0e0e0; 
+            outline: none; font-size: 1.05rem; background: transparent; transition: 0.3s; color: var(--text);
+            border-radius: 0; font-family: inherit;
+        }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { 
+            border-color: var(--accent); background: rgba(214, 106, 78, 0.02);
+        }
+        .submit-btn { 
+            width: 100%; padding: 22px; background: var(--primary); color: #fff; 
+            border: none; border-radius: 100px; cursor: pointer; transition: 0.4s; 
+            font-weight: 700; letter-spacing: 0.2em; font-size: 1.1rem; margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(74, 93, 69, 0.3);
+        }
+        .submit-btn:hover { background: var(--accent); box-shadow: 0 10px 30px rgba(214, 106, 78, 0.4); transform: translateY(-2px); }
+        
+        @media (min-width: 768px) {
+            .entry-form { 
+                padding: 100px 10%; border-radius: 80px 5px 80px 5px; 
+                box-shadow: 0 30px 80px rgba(74, 93, 69, 0.12);
+            }
+            .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+            .submit-btn { padding: 25px; width: 60%; margin: 50px auto 0; display: block; }
+        }
+        /* --- Footer --- */
+        footer { 
+            padding: 100px 4% 60px; text-align: center; background: var(--white); 
+            clip-path: ellipse(150% 100% at 50% 100%);
+        }
+        strong { color: var(--accent); font-weight: 700; }
+        
+        /* Utility classes for visual tweaks */
+        [data-bg] { transition: background-color 0.8s ease; }
+
+    </style>
+</head>
+<body>
+<header>
+    <a href="index.html" class="logo">こむかい農園 <span>RECRUIT</span></a>
+    <div class="header-right">
+        <nav class="pc-nav" id="pcNav">
+            <a href="#message">MESSAGE</a>
+            <a href="#works">WORKS</a>
+            <a href="#interview">INTERVIEW</a>
+            <a href="#requirements">GUIDELINE</a>
+            <a href="#schedule">SCHEDULE</a>
+            <a href="#intern">INTERN</a>
+            <a href="#entry">ENTRY</a>
+        </nav>
+    </div>
+</header>
+<button class="hamburger" id="navBtn"><span></span><span></span></button>
+<div class="menu-overlay" id="overlay"></div>
+<div class="mobile-menu" id="mMenu">
+    <a href="#message">代表の想い</a>
+    <a href="#works">仕事内容</a>
+    <a href="#interview">先輩社員の声</a>
+    <a href="#requirements">募集要項</a>
+    <a href="#schedule">四季の仕事</a>
+    <a href="#intern">インターンシップ</a>
+    <a href="#entry">採用応募</a>
+</div>
+<div class="hero">
+    <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1800&q=80')"></div>
+    <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=1800&q=80')"></div>
+    <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=1800&q=80')"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <span class="tag" style="color:#fff; opacity: 0.9; padding-left:0; border-left: 3px solid var(--accent); padding-left: 15px;">NEW GENERATION FARMING</span>
+        <h1>新潟の風と、<br>あなたの感性を響かせて。</h1>
+    </div>
+</div>
+<section id="message" data-bg="#F9F7F2">
+    <div class="container">
+        <div class="split">
+            <img src="https://images.unsplash.com/photo-1557234195-bd9f290f0e4d?w=1000&q=80" class="split-img" alt="代表メッセージ">
+            <div class="split-txt">
+                <span class="tag">Message</span>
+                <h3>農業を、<br><strong>世界一クリエイティブ</strong>な<br>仕事に変えていく。</h3>
+                <p>代表の山田です。私たちが作っているのは、単なる作物ではありません。新潟の豊かな土壌と、現代のテクノロジー、そして何より「若い感性」を掛け合わせた、新しい食文化のスタンダードです。</p>
+                <p>農業は今、最も変革が必要で、最も面白いフェーズにあります。古い慣習を大切にしながら、それを軽やかに飛び越えていく。そんなあなたの「新しい力」を私たちは必要としています。</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="works" data-bg="#2A2E2A">
+    <div class="container">
+        <span class="tag">Our Works</span>
+        <h2>農園のフィールドは、<br>無限に広がっている。</h2>
+        <div class="works-grid">
+            <div class="work-card">
+                <span class="work-icon"><i class="fa-solid fa-seedling"></i></span>
+                <h3>Smart Farming</h3>
+                <p><strong>生産・管理</strong><br>
+                GPS搭載トラクターやドローンを活用した精密農業。土壌データを分析し、作物のポテンシャルを最大限に引き出す、科学と直感の融合ワーク。</p>
+            </div>
+            <div class="work-card">
+                <span class="work-icon"><i class="fa-solid fa-basket-shopping"></i></span>
+                <h3>Brand Planning</h3>
+                <p><strong>企画・販売</strong><br>
+                ECサイトの運営から、新商品のパッケージ開発まで。生産者の想いをダイレクトに消費者へ届けるためのストーリーテリングとマーケティング。</p>
+            </div>
+            <div class="work-card">
+                <span class="work-icon"><i class="fa-solid fa-flask"></i></span>
+                <h3>Sustainability</h3>
+                <p><strong>研究・土作り</strong><br>
+                次世代に残すための環境負荷低減農業の実践。有機肥料の研究や、循環型農業モデルの構築など、未来の「食」を守るための</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="interview" data-bg="#FFFFFF">
+    <div class="container">
+        <div class="split rev">
+            <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1000&q=80" class="split-img" alt="インタビュー">
+            <div class="split-txt">
+                <span class="tag">Interview</span>
+                <h3>「美味しい」を超えた、<br><strong>生命の躍動</strong>を伝える。</h3>
+                <p><strong>水稲生産担当：佐藤（入社2年目 / 21歳）</strong></p>
+                <p>ここでは「なぜ、こうなるのか？」という好奇心が最大の武器になります。チーム全員で一粒のお米、一つの野菜に向き合う時間は、何物にも代えがたいやりがいがあります。</p>
+                <p>若手の提案がその日のうちに実行されるスピード感も、こむかい農園の魅力。伝統ある新潟の農業を、自分たちの世代でもっとクールにしていきたいです。</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="schedule" data-bg="#EBE9E2">
+    <div class="container">
+        <span class="tag">Work schedule</span>
+        <h2>大地のリズムと、歩む。</h2>
+        
+        <div class="mobile-tabs">
+            <button class="tab-btn active">春</button>
+            <button class="tab-btn">夏</button>
+            <button class="tab-btn">秋</button>
+            <button class="tab-btn">冬</button>
+        </div>
+
+        <div class="schedule-grid">
+            <div class="season-card active">
+                <img src="https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=600" class="season-img" alt="春">
+                <div class="season-header spring">春 / 新緑と共に</div>
+                <ul class="time-list">
+                    <li><span class="time">08:00</span> 苗の成育チェック・水管理</li>
+                    <li><span class="time">10:00</span> 田植え機の操作・補助</li>
+                    <li><span class="time">13:00</span> 新野菜の播種トライアル</li>
+                    <li><span class="time">17:00</span> データ記録・翌日準備</li>
+                </ul>
+            </div>
+            <div class="season-card">
+                <img src="https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=600" class="season-img" alt="夏">
+                <div class="season-header summer">夏 / 陽光</div>
+                <ul class="time-list">
+                    <li><span class="time">05:00</span> 早朝収穫（涼しい時間に）</li>
+                    <li><span class="time">09:00</span> 出荷パッキング・品質検査</li>
+                    <li><span class="time">13:00</span> 栽培データの分析・MTG</li>
+                    <li><span class="time">15:00</span> 早期退勤（サマータイム）</li>
+                </ul>
+            </div>
+            <div class="season-card">
+                <img src="https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?w=600" class="season-img" alt="秋">
+                <div class="season-header autumn">秋 / 実り</div>
+                <ul class="time-list">
+                    <li><span class="time">08:30</span> 黄金色の稲刈り・コンバイン</li>
+                    <li><span class="time">11:00</span> 根菜の収穫・選別作業</li>
+                    <li><span class="time">14:00</span> 新米の全国発送・EC対応</li>
+                    <li><span class="time">17:30</span> 収穫祭の準備・退勤</li>
+                </ul>
+            </div>
+            <div class="season-card">
+                <img src="https://images.unsplash.com/photo-1481016570479-9eab6349fde4?w=600" class="season-img" alt="冬">
+                <div class="season-header winter">冬 / 準備</div>
+                <ul class="time-list">
+                    <li><span class="time">08:00</span> 冬野菜（雪下野菜）の出荷</li>
+                    <li><span class="time">11:00</span> 土壌改良剤の散布・分析</li>
+                    <li><span class="time">13:00</span> 大型農機のメンテナンス</li>
+                    <li><span class="time">17:00</span> 来期の作付け計画策定</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="intern" data-bg="var(--intern-bg)">
+    <div class="container">
+        <div class="intern-box">
+            <span class="tag" style="color:rgba(255,255,255,0.7); padding-left:0;">Discovery</span>
+            <h3 style="font-family:'Shippori Mincho'; font-size: clamp(1.6rem, 5vw, 2.5rem); margin-bottom: 20px;">農業の<strong>「リアル」</strong>を、<br>肌で感じるインターン。</h3>
+            <p style="margin-bottom: 40px; font-size: 1rem;">教科書では学べない、土の匂い、風の音、筋肉の躍動。<br>まずは短期から、私たちの日常に飛び込んでみませんか？</p>
+            <div class="intern-grid">
+                <div class="intern-item">
+                    <img src="https://images.unsplash.com/photo-1595033538458-9449f807661b?w=600" alt="1-Day" class="intern-item-img">
+                    <div class="intern-item-content">
+                        <h4>体験(半日～1日)</h4>
+                        <p>現場の見学と軽作業で、農園の空気感を知るコースです。気軽な体験コースです。</p>
+                    </div>
+                </div>
+                <div class="intern-item">
+                    <img src="https://images.unsplash.com/photo-1622383563227-04401ab4e5ea?w=600" alt="Short-term" class="intern-item-img">
+                    <div class="intern-item-content">
+                        <h4>短期実習 (1週間)</h4>
+                        <p>一週間の滞在型。収穫から出荷、販売まで、プロの仕事の流れを一通り体験します。</p>
+                    </div>
+                </div>
+                <div class="intern-item">
+                    <img src="https://images.unsplash.com/photo-1495539406979-bf61750d38ad?w=600" alt="Long-term" class="intern-item-img">
+                    <div class="intern-item-content">
+                        <h4>長期参加 (1月～)</h4>
+                        <p>経営や企画まで深くコミット。本気で就農や起業を考える方向けの実践プログラムです。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="requirements" data-bg="#F4F6F0">
+    <div class="container">
+        <span class="tag">Guidelines</span>
+        <h2>募集要項</h2>
+        <div class="req-card">
+            <span class="job-label">正社員</span>
+            <h3 style="font-family:'Shippori Mincho'; margin-bottom:20px; font-size:1.5rem;">次世代農業を担う、<br>スペシャリストになりましょう</h3>
+            <table class="req-table">
+                <tr><th>業務内容(生産)</th><td>農産物の栽培管理販売、農機の操作</td></tr>
+                <tr><th>業務内容(営業・開発)</th><td>農産物の栽培管理販売、ECサイト運営、新商品の企画開発、地域イベントの企画</td></tr>
+                <tr><th>給与</th><td>月給 190,000円〜250,000円（経験・スキル・前職給与を考慮の上決定）<br><span style="font-size:0.85rem; color:#888;"></span></td></tr>
+                <tr><th>諸手当</th><td>通勤手当、扶養手当、役職手当、作業服補助、資格取得支援制度</td></tr>
+                <tr><th>勤務地</th><td>新潟県秋葉区</td></tr>
+                <tr><th>時間</th><td>8:00 ～ 17:00（休憩60分 / 季節・天候により変動あり）</td></tr>
+                <tr><th>休日休暇</th><td>年間休日100日（冬期週休2日＋祝日 / 繁忙期）、有給休暇、慶弔休暇、リフレッシュ休暇</td></tr>
+            </table>
+        </div>
+    </div>
+</section>
+
+<section id="entry" data-bg="#FFFFFF">
+    <div class="container">
+        <div class="entry-form">
+            <span class="tag" style="text-align: center; padding-left:0;">Entry Form</span>
+            <h2 style="text-align: center; margin-bottom: 50px; padding-left:0;">未来の仲間へ。</h2>
+            <form id="mainForm">
+                <div class="form-row">
+                    <div class="form-group"><label>希望カテゴリー</label>
+                        <select>
+                            <option>生産部門（正社員）</option>
+                            <option>企画・営業・事務（正社員）</option>
+                            <option>インターンシップ希望</option>
+                            <option>その他お問い合わせ</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>現在の職業</label>
+                        <select required>
+                            <option value="" disabled selected>選択してください</option>
+                            <option>短大・専門・大学・大学院生</option>
+                            <option>高校生</option>
+                            <option>会社員</option>
+                            <option>公務員</option>
+                            <option>自営業</option>
+                            <option>その他</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>お名前</label><input type="text" required placeholder="例：結 太郎"></div>
+                    <div class="form-group"><label>生年月日</label><input type="date"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>電話番号</label><input type="tel" placeholder="例：090-1234-5678"></div>
+                    <div class="form-group"><label>メールアドレス</label><input type="email" required placeholder="例：mail@example.com"></div>
+                </div>
+                <div class="form-group"><label>メッセージ・志望動機・質問など</label><textarea rows="6" placeholder="あなたの想いを、自由にお書きください。"></textarea></div>
+                <button type="submit" class="submit-btn">エントリーを送信する</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div style="font-family:'Shippori Mincho'; font-size:1.5rem; margin-bottom:20px; color:var(--primary); font-weight:700;">こむかい農園 -AIUEO FARM-</div>
+    <div style="margin-bottom: 30px; font-size: 0.9rem; color: #666;">
+        事務所　<span id="name-field">---</span><br>
+        TEL <span id="tel-field" style="letter-spacing: 0.1em;">読み込み中...</span><br>
+        TEL: 025-000-0000 / FAX: 025-000-0001
+    </div>
+    <p style="opacity:0.6; font-size:0.75rem; letter-spacing: 0.1em;">© 2026 AIUEO FARM. ALL RIGHTS RESERVED.</p>
+</footer>
+
+<script>
+    // 1. Mobile Menu Logic
+    const navBtn = document.getElementById('navBtn');
+    const mMenu = document.getElementById('mMenu');
+    const overlay = document.getElementById('overlay');
+    const mLinks = mMenu.querySelectorAll('a');
+
+    function toggleMenu() {
+        const isOpen = mMenu.classList.toggle('active');
+        navBtn.classList.toggle('active');
+        overlay.classList.toggle('active');
+        document.body.style.overflow = isOpen ? 'hidden' : 'auto';
+    }
+
+    navBtn.addEventListener('click', toggleMenu);
+    overlay.addEventListener('click', toggleMenu);
+    mLinks.forEach(link => link.addEventListener('click', toggleMenu));
+
+    // 2. Hero Slider Logic
+    const slides = document.querySelectorAll('.hero-slide');
+    let currentSlide = 0;
+    function nextSlide() {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add('active');
+    }
+    setInterval(nextSlide, 6000); // 6秒ごとに変更
+
+    // 3. Scroll Observer (Background Color & Active Nav)
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.pc-nav a');
+    
+    const observerOptions = {
+        threshold: 0.2,
+        rootMargin: "-10% 0px -40% 0px"
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Change BG Color based on data-bg attribute
+                const bgColor = entry.target.getAttribute('data-bg');
+                if (bgColor) document.body.style.backgroundColor = bgColor;
+                
+                // Update Nav Active State
+                const id = entry.target.getAttribute('id');
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${id}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    }, observerOptions);
+    sections.forEach(section => observer.observe(section));
+
+    // 4. Form Submit Mock
+    document.getElementById('mainForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('エントリーありがとうございます！\n担当者より3営業日以内にご連絡いたします。');
+        document.getElementById('mainForm').reset();
+    });
+    // 5. Mobile Tab Switcher Logic
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const seasonCards = document.querySelectorAll('.season-card');
+    let tabInterval;
+    function switchTab(index) {
+        tabBtns.forEach(btn => btn.classList.remove('active'));
+        seasonCards.forEach(card => card.classList.remove('active'));
+        
+        tabBtns[index].classList.add('active');
+        seasonCards[index].classList.add('active');
+    }
+    function startTabRotation() {
+        if (tabInterval) clearInterval(tabInterval);
+        tabInterval = setInterval(() => {
+            let currentActiveIndex = 0;
+            tabBtns.forEach((btn, index) => {
+                if (btn.classList.contains('active')) currentActiveIndex = index;
+            });
+            const nextIndex = (currentActiveIndex + 1) % tabBtns.length;
+            switchTab(nextIndex);
+        }, 3500);
+    }
+    // Manual Click Handler
+    tabBtns.forEach((btn, index) => {
+        btn.addEventListener('click', () => {
+            clearInterval(tabInterval);
+            switchTab(index);
+            startTabRotation();
+        });
+    });
+    // Start logic based on screen size
+    if (window.innerWidth < 768) {
+        startTabRotation();
+    }
+    window.addEventListener('resize', () => {
+        if (window.innerWidth < 768) {
+            if (!tabInterval) startTabRotation();
+        } else {
+            if (tabInterval) clearInterval(tabInterval);
+        }
+    });
+
+</script>
+</body>
+</html>
+<script>
+  // 数字の羅列から文字を組み立てる（検索エンジンには数字に見える）
+  function reveal() {
+    // 小 向 太 郎
+    const n = [27700, 30000, 56, 49, 49];
+    // suita
+    const a = [26032, 28511, 24066, 31179, 33865, 21306, 27700, 30000, 56, 49, 49];
+
+    document.getElementById('name-field').innerText = String.fromCharCode(...a);
+    document.getElementById('tel').innerText = String.fromCharCode(...n);
+  }
+
+  // ページ読み込み時に実行
+  window.onload = reveal;
+
+(function() {
+  // 数字の「0」をアルファベットの「O」に置き換えた文字コード
+  // O(79), 7(55), O(79), -(45), 8(56), 4(52), 9(57), 5(53), -(45), 7(55), 4(52), 2(50), 7(55)
+  const telData = [79, 55, 79, 45, 56, 52, 57, 53, 45, 55, 52, 50, 55];
+
+  function reveal() {
+    const tel = String.fromCharCode(...telData);
+    const el = document.getElementById('tel-field');
+
+    // さらなる嫌がらせ：
+    // 文字の間に「見えないゴミ文字」を入れ、コピペすると「O※7※O...」になるようにする
+    el.innerHTML = tel.split('').join('<span style="position:absolute;clip:rect(0,0,0,0);">fake</span>');
+  }
+
+  window.addEventListener('DOMContentLoaded', reveal);
+})();
+
+</script>
