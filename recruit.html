@@ -755,13 +755,6 @@
         });
     }, observerOptions);
     sections.forEach(section => observer.observe(section));
-
-    // 4. Form Submit Mock
-    document.getElementById('mainForm').addEventListener('submit', (e) => {
-        e.preventDefault();
-        alert('エントリーありがとうございます！\n担当者より3営業日以内にご連絡いたします。');
-        document.getElementById('mainForm').reset();
-    });
     
     // 5. Mobile Tab Switcher Logic
     const tabBtns = document.querySelectorAll('.tab-btn');
