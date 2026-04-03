@@ -413,7 +413,37 @@
         
         /* Utility classes for visual tweaks */
         [data-bg] { transition: background-color 0.8s ease; }
+/* --- 確認画面モーダル用 --- */
+.modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+    z-index: 100000; display: flex; justify-content: center; align-items: center;
+    opacity: 0; visibility: hidden; transition: 0.3s; backdrop-filter: blur(5px);
+}
+.modal-overlay.active { opacity: 1; visibility: visible; }
+.modal-content {
+    background: #fff; width: 90%; max-width: 600px; border-radius: 20px;
+    padding: 40px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+.modal-title { 
+    font-family: 'Shippori Mincho', serif; color: var(--primary); 
+    margin-bottom: 20px; text-align: center; font-size: 1.5rem; font-weight: 700;
+}
+.confirm-row { margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+.confirm-label { font-size: 0.85rem; color: var(--primary); font-weight: 700; margin-bottom: 5px; }
+.confirm-value { font-size: 1rem; color: var(--text); white-space: pre-wrap; line-height: 1.5; }
+.modal-actions { display: flex; gap: 15px; margin-top: 30px; }
+.btn-back, .btn-submit { 
+    flex: 1; padding: 15px; border-radius: 50px; font-weight: 700; 
+    cursor: pointer; transition: 0.3s; text-align: center; border: none; font-size: 1rem;
+}
+.btn-back { background: #e0e0e0; color: #333; }
+.btn-back:hover { background: #ccc; }
+.btn-submit { background: var(--primary); color: #fff; }
+.btn-submit:hover { background: var(--accent); }
 
+@media (max-width: 767px) {
+    .modal-actions { flex-direction: column-reverse; gap: 10px; }
+}
     </style>
 </head>
 <body>
@@ -638,7 +668,7 @@
 <form id="mainForm" action="https://formspree.io/f/xjgpednk" method="POST">
     <div class="form-row">
         <div class="form-group">
-            <label>希望カテゴリー</label>
+            <label>希望カテゴリー/インターン</label>
             <select name="category">
                 <option value="生産部門（正社員）">生産部門（正社員）</option>
                 <option value="企画・営業・事務（正社員）">企画・営業・事務（正社員）</option>
@@ -687,12 +717,22 @@
         <textarea name="message" rows="6" placeholder="あなたの想いを、自由にお書きください。"></textarea>
     </div>
 
-    <button type="submit" class="submit-btn">エントリーを送信する</button>
+<button type="button" class="submit-btn" id="btnOpenModal">入力内容を確認する</button>
 </form>
         </div>
     </div>
 </section>
-
+<div id="confirmModal" class="modal-overlay">
+    <div class="modal-content">
+        <h3 class="modal-title">入力内容のご確認</h3>
+        <div id="confirmDetails">
+            </div>
+        <div class="modal-actions">
+            <button type="button" class="btn-back" id="btnBack">修正する</button>
+            <button type="button" class="btn-submit" id="btnConfirmSubmit">この内容で送信する</button>
+        </div>
+    </div>
+</div>
 <footer>
     <div style="font-family:'Shippori Mincho'; font-size:1.5rem; margin-bottom:20px; color:var(--primary); font-weight:700;">こむかい農園 -KOMUKAI FARM-</div>
     <div style="margin-bottom: 30px; font-size: 0.9rem; color: #666;">
@@ -822,6 +862,91 @@
 
   window.addEventListener('DOMContentLoaded', revealTel);
 })();
+// --- 確認画面 ＆ Formspree 非同期送信処理 ---
+  const form = document.getElementById('mainForm');
+  const modalConfirm = document.getElementById('confirmModal');
+  const confirmDetails = document.getElementById('confirmDetails');
+  const btnBack = document.getElementById('btnBack');
+  const btnConfirmSubmit = document.getElementById('btnConfirmSubmit');
+  const btnOpenModal = document.getElementById('btnOpenModal'); // 追加
+
+  // name属性と日本語ラベルの対応表
+  const fieldLabels = {
+      category: '希望カテゴリー',
+      job: '現在の職業',
+      name: 'お名前',
+      birthday: '生年月日',
+      tel: '電話番号',
+      email: 'メールアドレス',
+      message: 'メッセージ'
+  };
+
+  // 1. 「入力内容を確認する」ボタンが押されたときの処理
+  btnOpenModal.addEventListener("click", function() {
+      // 必須項目（required）が埋まっているか、ブラウザ標準のチェックを実行
+      if (!form.reportValidity()) {
+          return; // 未入力があればここでストップ（Formspreeにはいかない）
+      }
+
+      // 入力データを取得して確認画面のHTMLを作成
+      const formData = new FormData(form);
+      let html = '';
+      for (const [key, value] of formData.entries()) {
+          if (fieldLabels[key]) {
+              const safeValue = value.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+              html += `
+                  <div class="confirm-row">
+                      <div class="confirm-label">${fieldLabels[key]}</div>
+                      <div class="confirm-value">${safeValue || '（未入力）'}</div>
+                  </div>
+              `;
+          }
+      }
+      confirmDetails.innerHTML = html;
+      
+      // モーダルを表示
+      modalConfirm.classList.add('active');
+  });
+
+  // 2. 「修正する」ボタンが押されたときの処理
+  btnBack.addEventListener("click", function() {
+      modalConfirm.classList.remove('active'); // モーダルを隠すだけ
+  });
+
+  // 3. モーダル内の「この内容で送信する」ボタンが押されたときの処理
+  btnConfirmSubmit.addEventListener("click", async function() {
+      const formData = new FormData(form);
+      
+      // 二重送信防止のためボタンを無効化
+      const originalText = btnConfirmSubmit.innerText;
+      btnConfirmSubmit.innerText = '送信中...';
+      btnConfirmSubmit.disabled = true;
+      btnBack.disabled = true;
+
+      try {
+          // ここで初めてFormspreeへ裏側でデータ送信する
+          const response = await fetch(form.action, {
+              method: form.method,
+              body: formData,
+              headers: { 'Accept': 'application/json' }
+          });
+          
+          if (response.ok) {
+              form.reset(); // フォームの中身をリセット
+              modalConfirm.classList.remove('active'); // モーダルを閉じる
+              alert("エントリーを受け付けました。ご応募ありがとうございます！");
+          } else {
+              alert("送信に失敗しました。時間をおいて再度お試しください。");
+          }
+      } catch (error) {
+          alert("通信エラーが発生しました。ネットワーク環境をご確認ください。");
+      } finally {
+          // ボタンの状態を元に戻す
+          btnConfirmSubmit.innerText = originalText;
+          btnConfirmSubmit.disabled = false;
+          btnBack.disabled = false;
+      }
+  });
 </script>
 </body>
 </html>
