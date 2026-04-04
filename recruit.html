@@ -444,6 +444,19 @@
 @media (max-width: 767px) {
     .modal-actions { flex-direction: column-reverse; gap: 10px; }
 }
+/* --- 必須マークのデザイン --- */
+.required-mark {
+    display: inline-block;
+    background: var(--accent); /* 赤色（#D66A4E）を使用 */
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: normal;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-left: 10px;
+    letter-spacing: 0.05em;
+    vertical-align: text-bottom;
+}
     </style>
 </head>
 <body>
@@ -668,7 +681,7 @@
 <form id="mainForm" action="https://formspree.io/f/xjgpednk" method="POST">
     <div class="form-row">
         <div class="form-group">
-            <label>希望カテゴリー/インターン</label>
+            <label>希望カテゴリー/職種・インターン・その他</label>
             <select name="category">
                 <option value="生産部門（正社員）">生産部門（正社員）</option>
                 <option value="企画・営業・事務（正社員）">企画・営業・事務（正社員）</option>
@@ -677,7 +690,7 @@
             </select>
         </div>
         <div class="form-group">
-            <label>現在の職業</label>
+            <label>現在の職業<span class="required-mark">必須</span></label>
             <select name="job" required>
                 <option value="" disabled selected>選択してください</option>
                 <option value="大学・大学院生">大学・大学院生</option>
@@ -692,7 +705,7 @@
 
     <div class="form-row">
         <div class="form-group">
-            <label>お名前</label>
+            <label>お名前<span class="required-mark">必須</span></label>
             <input type="text" name="name" required placeholder="例：結 太郎">
         </div>
         <div class="form-group">
@@ -707,7 +720,7 @@
             <input type="tel" name="tel" placeholder="例：090-1234-5678">
         </div>
         <div class="form-group">
-            <label>メールアドレス</label>
+            <label>メールアドレス<span class="required-mark">必須</span></label>
             <input type="email" name="email" required placeholder="例：mail@example.com">
         </div>
     </div>
@@ -738,7 +751,7 @@
     <div style="margin-bottom: 30px; font-size: 0.9rem; color: #666;">
         事務所　<span id="name-field" style="letter-spacing: 0.1em;">秋<span style="position:absolute;clip:rect(0,0,0,0);">fake</span>7<span style="position:absolute;clip:rect(0,0,0,0);">fake</span>O<span style="position:absolute;clip:rect(0,0,0,0);">fake</span>-<span style="position:absolute;clip:rect(0,0,0,0);">fake</span>8<span style="position:absolute;clip:rect(0,0,0,0);">fake</span>4<span style="position:absolute;clip:rect(0,0,0,0);">fake</span>9<span style="position:absolute;clip:rect(0,0,0,0);">fake</span>5<span style="position:absolute;clip:rect(0,0,0,0);">fake</span>-<span style="position:absolute;clip:rect(0,0,0,0);">fake</span>7<span style="position:absolute;clip:rect(0,0,0,0);">fake</span>4<span style="position:absolute;clip:rect(0,0,0,0);">fake</span>2<span style="position:absolute;clip:rect(0,0,0,0);">fake</span>7</span><br>
         TEL <span id="tel-field" style="letter-spacing: 0.1em;">O<span style="position:absolute;clip:rect(0,0,0,0);">fake</span>7<span style="position:absolute;clip:rect(0,0,0,0);">fake</span>O<span style="position:absolute;clip:rect(0,0,0,0);">fake</span>-<span style="position:absolute;clip:rect(0,0,0,0);">fake</span>8<span style="position:absolute;clip:rect(0,0,0,0);">fake</span>4<span style="position:absolute;clip:rect(0,0,0,0);">fake</span>9<span style="position:absolute;clip:rect(0,0,0,0);">fake</span>5<span style="position:absolute;clip:rect(0,0,0,0);">fake</span>-<span style="position:absolute;clip:rect(0,0,0,0);">fake</span>7<span style="position:absolute;clip:rect(0,0,0,0);">fake</span>4<span style="position:absolute;clip:rect(0,0,0,0);">fake</span>2<span style="position:absolute;clip:rect(0,0,0,0);">fake</span>7</span><br></div>
-    <p style="opacity:0.6; font-size:0.75rem; letter-spacing: 0.1em;">© 2026 AIUEO FARM. ALL RIGHTS RESERVED.</p>
+    <p style="opacity:0.6; font-size:0.75rem; letter-spacing: 0.1em;">© 2026 KOMUKAI FARM. ALL RIGHTS RESERVED.</p>
 </footer>
 
 <script>
